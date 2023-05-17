@@ -6,9 +6,7 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 
-import timeRoutes from "../routes/time";
-import uploadRoutes from "../routes/upload";
-import userRoutes from "../routes/users";
+import routes from "../routes/app.routes";
 
 dotenv.config();
 
@@ -22,9 +20,7 @@ export class Server {
 		this.express.use(json());
 		this.express.use(urlencoded({ extended: true }));
 		this.express.use(morgan("dev"));
-		this.express.use(userRoutes);
-		this.express.use(uploadRoutes);
-		this.express.use(timeRoutes);
+		this.express.use(routes);
 	}
 
 	async listen(): Promise<void> {
