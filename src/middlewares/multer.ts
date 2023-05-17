@@ -2,11 +2,14 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 
+type DestinationCallback = (error: Error | null, destination: string) => void;
+type FileNameCallback = (error: Error | null, filename: string) => void;
+
 export const storage = multer.diskStorage({
-	destination(req, file, cb) {
+	destination(req: express.Request, file: Express.Multer.File, cb: DestinationCallback): void {
 		cb(null, `${process.cwd()}/uploads`);
 	},
-	filename(req, file, cb) {
+	filename(req, file, cb: FileNameCallback): void {
 		const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
 		cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
 	},
