@@ -14,7 +14,6 @@ router.post("/upload", upload.single("image"), uploadImg);
 // Returns a json with the current time
 router.post("/time", verifyUser, noCache, getUserTime);
 // Returns a json with the pokemon's name, height and weight by its id
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.get("/pokemon/:id", getPokemon);
 
 export default router;

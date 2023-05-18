@@ -9,6 +9,13 @@ export const uploadImg = (req: Request, res: Response): Response => {
 };
 
 export const getUserTime = (req: Request, res: Response): Response => {
+	if (!req.body.username) {
+		res.status(400).json({ Error: "El campo username es requerido." });
+
+		if (req.body.username === "") {
+			res.status(400).json({ Error: "El campo name no puede estar vacío." });
+		}
+	}
 	const currentDate = new Date();
 
 	const response = {
@@ -30,24 +37,15 @@ export const getUser = (req: Request, res: Response): Response => {
 	});
 };
 
-export const getPokemon = async (req: Request, res: Response): Promise<Response> => {
-	try {
-		const { id } = req.params;
-		const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-		const data = await response.json();
-
-		// Extrae los datos necesarios del objeto "data"
-		const { name, height, weight } = data;
-
-		return res.json({
-			name,
-			height,
-			weight,
+export const getPokemon = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+		.then((res) => res.json())
+		.then((json) => {
+			const { name, height, weight } = json;
+			res.json({ name, height, weight });
+		})
+		.catch((err: Error) => {
+			res.status(404).json({ Error: err.message });
 		});
-	} catch (error) {
-		// Manejo de errores
-		console.error(error);
-
-		return res.status(500).json({ error: "Ocurrió un error al obtener el Pokémon." });
-	}
 };
