@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "set NODE_ENV=test && jest",
+    "test:feature": "cucumber-js test",
     "dev": "ts-node-dev --inspect --respawn --pretty ./src/backend/server.start.ts",
     "build": "rimraf ./dist && tsc",
     "start": "node ./dist/index.js",

@@ -8,4 +8,12 @@ export class App {
 		this.server = new Server(port);
 		await this.server.listen();
 	}
+
+	get httpServer(): Server["httpServer"] | undefined {
+		return this.server?.getHTTPServer();
+	}
+
+	async close(): Promise<void> {
+		return await this.server?.close();
+	}
 }
