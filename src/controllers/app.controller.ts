@@ -46,6 +46,6 @@ export const getPokemon = (req: Request, res: Response): void => {
 			res.json({ name, height, weight });
 		})
 		.catch((err: Error) => {
-			res.status(404).json({ Error: err.message });
+			res.status(500).json({ Error: err.message });
 		});
 };

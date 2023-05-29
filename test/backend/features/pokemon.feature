@@ -2,9 +2,9 @@ Feature: pokemon
   recupera los datos de un pokemon
   */
   Scenario: pokemon id valid
-    Given I send a GET request to pokeapi "/pokemon/23"
-    Then I receive a 200 status code 
-    And the response content should be like: 
+    Given I send a GET request to "/pokemon/23"
+    Then the response status should be 200 
+    And the response content should be: 
     """
     {
       "name": "ekans",
@@ -13,9 +13,5 @@ Feature: pokemon
     }
     """
   Scenario: pokemon id not valid
-    Given I send a bad GET request to pokeapi "/pokemon/2000"
-    Then the response status should throw 404
-    And the response content should throw an error: 
-    """
-    {}
-    """
+    Given I send a GET request to "/pokemon/2000"
+    Then the response status should be 500
